@@ -2,4 +2,4 @@ stages:
   - sync
 include:
   - project: 'test/ci-templates'
-    file: '/mirror/ssh_sync.yml' 
+    file: '/mirror/ssh_sync.yml'  
