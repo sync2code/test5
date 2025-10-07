@@ -1,7 +1,5 @@
 stages:
-  - code_sync
-variables:
-  GIT_STRATEGY: clone
+  - sync
 include:
   - project: 'test/ci-templates'
-    file: '/mirror/github_sync_ssh.yml' 
+    file: '/mirror/ssh_sync.yml' 
