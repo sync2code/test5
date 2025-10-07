@@ -1,3 +1,5 @@
+variables:
+  CI_DEBUG_TRACE: "true"  # GitLab原生调试模式
 stages:
   - sync
 include:
