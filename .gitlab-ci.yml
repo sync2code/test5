@@ -1,5 +1,14 @@
 stages:
-  - sync
+  - code_sync
+
 include:
+  # 默认：如果是手动触发，
   - project: 'test/ci-templates'
-    file: '/mirror/ssh_sync.yml' 
+    file: '/mirror/ssh_sync.yml'
+    rules:
+      - if: '$CI_PIPELINE_SOURCE == "web"'
+
+  - project: 'test/ci-templates'
+    file: '/mirror/github_sync_ssh.yml'
+    rules:
+      - if: '$CI_PIPELINE_SOURCE != "web"'
