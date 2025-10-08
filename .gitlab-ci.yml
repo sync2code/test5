@@ -1,19 +1,26 @@
-#variables:
-#  CI_DEBUG_TRACE: "true"  # GitLab原生调试模式
-
-
 stages:
+  - debug
   - code_sync
 
+# 调试：打印 CI_PIPELINE_SOURCE 值
+debug:
+  stage: debug
+  script:
+    - echo "🔍 CI_PIPELINE_SOURCE=$CI_PIPELINE_SOURCE"
+  rules:
+    - when: always
+
+# 动态引入模板文件
 include:
-  # 默认：如果是手动触发，就用 ssh_sync.yml
+  # 1️⃣ 手动触发（web）或定时触发（schedule） => 用 ssh_sync.yml
   - project: 'test/ci-templates'
     file: '/mirror/ssh_sync.yml'
     rules:
       - if: '$CI_PIPELINE_SOURCE == "web"'
+      - if: '$CI_PIPELINE_SOURCE == "schedule"'
 
-  # 否则（比如 push、merge、schedule 等）使用 github_sync_ssh.yml
+  # 2️⃣ 其他情况（push、merge_request_event、trigger等） => 默认用 github_sync_ssh.yml
   - project: 'test/ci-templates'
     file: '/mirror/github_sync_ssh.yml'
     rules:
-      - if: '$CI_PIPELINE_SOURCE != "web"'
+      - when: always
