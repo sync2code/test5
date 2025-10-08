@@ -8,7 +8,7 @@ stages:
 include:
   # 默认：如果是手动触发，就用 ssh_sync.yml
   - project: 'test/ci-templates'
-    file: '/mirror/ci_job_sync_github.yml'
+    file: '/mirror/ssh_sync.yml'
     rules:
       - if: '$CI_PIPELINE_SOURCE == "web"'
 
